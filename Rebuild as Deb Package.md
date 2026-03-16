@@ -3,7 +3,7 @@
 #### Install Dependencies
 
 ```bash
-sudo apt install -y dpkg-dev git debhelper-compat rsync
+sudo apt install -y dpkg-dev git debhelper-compat rsync libdw-dev
 
 ## On Debian Bookworm, debhelper defaults to a later compatibility level (e.g., 13). To match the kernel packaging expectations, install debhelper explicitly and create the required compat file:
 echo "12" | sudo tee debian/compat
