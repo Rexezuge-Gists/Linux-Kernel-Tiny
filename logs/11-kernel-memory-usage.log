@@ -1,0 +1,123 @@
+## 2026-05-17T20:37:31Z
+description: Record local kernel memory script checksum
+cwd: /home/azureuser/KernelSlim
+command: sha256sum scripts/kernel-memory-usage.sh
+
+9cc0a3c8e7bf9412d2b4d08ccba29214d191ad0c8e106761358bca67d4dbcb82  scripts/kernel-memory-usage.sh
+
+exit_code: 0
+
+## 2026-05-17T20:37:35Z
+description: Copy kernel memory script to current conservative test VM
+cwd: /home/azureuser/KernelSlim
+command: scp scripts/kernel-memory-usage.sh 20.9.44.143:/home/azureuser/kernelslim-test/kernel-memory-usage.sh
+
+
+exit_code: 0
+
+## 2026-05-17T20:37:39Z
+description: Run memory usage script on conservative Azure kernel before balanced install
+cwd: /home/azureuser/KernelSlim
+command: ssh 20.9.44.143 set\ -x\;\ uname\ -a\;\ chmod\ +x\ ~/kernelslim-test/kernel-memory-usage.sh\;\ ~/kernelslim-test/kernel-memory-usage.sh
+
++ uname -a
+Linux runt2 6.18.32-kernelslim-conservative-azure #kernelslim2 SMP Sun May 17 19:48:35 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ chmod +x /home/azureuser/kernelslim-test/kernel-memory-usage.sh
++ /home/azureuser/kernelslim-test/kernel-memory-usage.sh
+=======================================
+ Linux Kernel Memory Usage Statistics
+=======================================
+
+Kernel Memory Breakdown:
+---------------------------------------
+Slab:                         161.15 MB
+  SReclaimable:               100.68 MB
+  SUnreclaim:                  60.48 MB
+KernelStack:                    2.80 MB
+PageTables:                     3.77 MB
+VmallocUsed:                   31.13 MB
+Percpu:                         0.89 MB
+
+DirectMap Total:                0.00 MB
+
+---------------------------------------
+Estimated Kernel Used:        199.73 MB
+
+Notes:
+  - Excludes user-space process RSS/VSZ
+  - Includes slab/page tables/kernel stack/vmalloc/percpu
+  - DirectMap is shown separately (physical mapping region)
+  - Values are approximations from /proc/meminfo
+
+exit_code: 0
+
+## 2026-05-17T20:38:42Z
+description: Run memory usage script on balanced kernel
+cwd: /home/azureuser/KernelSlim
+command: ssh 20.9.44.143 set\ -x\;\ uname\ -a\;\ ~/kernelslim-test/kernel-memory-usage.sh
+
++ uname -a
+Linux runt2 6.18.32-kernelslim-balanced #kernelslim3 SMP Sun May 17 20:29:34 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ /home/azureuser/kernelslim-test/kernel-memory-usage.sh
+=======================================
+ Linux Kernel Memory Usage Statistics
+=======================================
+
+Kernel Memory Breakdown:
+---------------------------------------
+Slab:                          70.37 MB
+  SReclaimable:                21.17 MB
+  SUnreclaim:                  49.20 MB
+KernelStack:                    2.98 MB
+PageTables:                     4.30 MB
+VmallocUsed:                   28.92 MB
+Percpu:                         0.82 MB
+
+DirectMap Total:                0.00 MB
+
+---------------------------------------
+Estimated Kernel Used:        107.40 MB
+
+Notes:
+  - Excludes user-space process RSS/VSZ
+  - Includes slab/page tables/kernel stack/vmalloc/percpu
+  - DirectMap is shown separately (physical mapping region)
+  - Values are approximations from /proc/meminfo
+
+exit_code: 0
+
+## 2026-05-17T21:06:29Z
+description: Run memory usage script on aggressive kernel
+cwd: /home/azureuser/KernelSlim
+command: ssh 20.9.44.143 set\ -x\;\ uname\ -a\;\ ~/kernelslim-test/kernel-memory-usage.sh
+
++ uname -a
+Linux runt2 6.18.32-kernelslim-aggressive #kernelslim4 SMP Sun May 17 21:00:25 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ /home/azureuser/kernelslim-test/kernel-memory-usage.sh
+=======================================
+ Linux Kernel Memory Usage Statistics
+=======================================
+
+Kernel Memory Breakdown:
+---------------------------------------
+Slab:                          66.91 MB
+  SReclaimable:                19.29 MB
+  SUnreclaim:                  47.62 MB
+KernelStack:                    2.67 MB
+PageTables:                     4.04 MB
+VmallocUsed:                   27.69 MB
+Percpu:                         0.79 MB
+
+DirectMap Total:                0.00 MB
+
+---------------------------------------
+Estimated Kernel Used:        102.11 MB
+
+Notes:
+  - Excludes user-space process RSS/VSZ
+  - Includes slab/page tables/kernel stack/vmalloc/percpu
+  - DirectMap is shown separately (physical mapping region)
+  - Values are approximations from /proc/meminfo
+
+exit_code: 0
+

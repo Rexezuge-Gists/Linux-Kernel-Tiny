@@ -1,0 +1,63 @@
+## 2026-05-17T19:15:01Z
+description: Copy conservative Debian packages into artifacts
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ cp\ sources/\*.deb\ artifacts/\;\ ls\ -lh\ artifacts\;\ sha256sum\ artifacts/\*.deb
+
++ cp sources/linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb sources/linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb sources/linux-libc-dev_6.18.32-kernelslim1_arm64.deb artifacts/
++ ls -lh artifacts
+total 113M
+-rw-r--r-- 1 azureuser azureuser 9.3M May 17 19:15 linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 102M May 17 19:15 linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 1.5M May 17 19:15 linux-libc-dev_6.18.32-kernelslim1_arm64.deb
++ sha256sum artifacts/linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb artifacts/linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb artifacts/linux-libc-dev_6.18.32-kernelslim1_arm64.deb
+7defbd2ddc25a0b110ab809c9140d9cb04ac7ad5dd6caae116aef9798f2c0281  artifacts/linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+fc3b3a30cd64ead86264e6f92928b9c54587572a8935029bb3272c7327f96b2f  artifacts/linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+13f683684198bab3cddb9c728f50633c9f0143eded68852a2c6066e58576109a  artifacts/linux-libc-dev_6.18.32-kernelslim1_arm64.deb
+
+exit_code: 0
+
+## 2026-05-17T19:51:06Z
+description: Copy Azure builtins Debian packages into artifacts
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ cp\ sources/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb\ sources/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb\ artifacts/\;\ ls\ -lh\ artifacts/\*azure\*.deb\;\ sha256sum\ artifacts/\*azure\*.deb
+
++ cp sources/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb sources/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb artifacts/
++ ls -lh artifacts/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb artifacts/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 9.3M May 17 19:51 artifacts/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 102M May 17 19:51 artifacts/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
++ sha256sum artifacts/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb artifacts/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+0eb602c6346e52e6cfc613eaa9962f3a048d43a2cb95e91b51dd0d67819ed33b  artifacts/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+3b8d1c307f6cbf6cf8ddc77c182b17fd7bd44cd8828756df2616c356d1aabd0d  artifacts/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+
+exit_code: 0
+
+## 2026-05-17T20:37:46Z
+description: Copy balanced Debian packages into artifacts
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ cp\ sources/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb\ sources/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb\ artifacts/\;\ ls\ -lh\ artifacts/\*balanced\*.deb\;\ sha256sum\ artifacts/\*balanced\*.deb
+
++ cp sources/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb sources/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb artifacts/
++ ls -lh artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 9.1M May 17 20:37 artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+-rw-r--r-- 1 azureuser azureuser  69M May 17 20:37 artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
++ sha256sum artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+ac0fd01de46cf6bc35dda2a08ab8db69d76870fc697157540503f44b66a1ddba  artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+796094849bb556739bac1c0955aed980e26df0d3fb5c7fe606ea4f5b7fb74d8c  artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+
+exit_code: 0
+
+## 2026-05-17T21:05:24Z
+description: Copy aggressive Debian packages into artifacts
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ cp\ sources/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb\ sources/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb\ artifacts/\;\ ls\ -lh\ artifacts/\*aggressive\*.deb\;\ sha256sum\ artifacts/\*aggressive\*.deb
+
++ cp sources/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb sources/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb artifacts/
++ ls -lh artifacts/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb artifacts/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 9.1M May 17 21:05 artifacts/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+-rw-r--r-- 1 azureuser azureuser  59M May 17 21:05 artifacts/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
++ sha256sum artifacts/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb artifacts/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+a116a51cc827bdd2798ac25bd1495656b32d0a6369cea3fcf091b4547f927225  artifacts/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+99e3810e39799c144edf992d1be8b00ebe1fcc9f0096a874e5ccd251cf9578b5  artifacts/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+
+exit_code: 0
+

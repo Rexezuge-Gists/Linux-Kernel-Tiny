@@ -1,0 +1,16 @@
+## 2026-05-17T17:04:21Z
+description: Copy running Ubuntu Azure kernel config as 00-current-host
+cwd: /home/azureuser/KernelSlim
+command: cp /boot/config-6.17.0-1013-azure configs/00-current-host-6.17.0-1013-azure.config
+
+
+exit_code: 0
+
+## 2026-05-17T17:04:24Z
+description: Copy 00 config into Linux source tree
+cwd: /home/azureuser/KernelSlim
+command: cp configs/00-current-host-6.17.0-1013-azure.config sources/linux-6.18.32/.config
+
+
+exit_code: 0
+

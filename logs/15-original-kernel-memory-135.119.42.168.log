@@ -1,0 +1,87 @@
+## 2026-05-17T21:04:46Z
+description: Accept SSH host key for original-kernel VM
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ ssh-keyscan\ -H\ 135.119.42.168\ \>\>\ ~/.ssh/known_hosts
+
++ ssh-keyscan -H 135.119.42.168
+# 135.119.42.168:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+# 135.119.42.168:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+# 135.119.42.168:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+# 135.119.42.168:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+# 135.119.42.168:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+
+exit_code: 0
+
+## 2026-05-17T21:04:51Z
+description: Check original-kernel VM identity
+cwd: /home/azureuser/KernelSlim
+command: ssh -o BatchMode=yes -o ConnectTimeout=10 135.119.42.168 set\ -x\;\ uname\ -a\;\ dpkg\ --print-architecture\;\ free\ -h\;\ df\ -h\ /\ /boot\ \|\|\ true
+
++ uname -a
+Linux runt3 6.17.0-1013-azure #13~24.04.1-Ubuntu SMP Wed Apr 15 17:07:43 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ dpkg --print-architecture
+arm64
++ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           7.7Gi       446Mi       7.1Gi       4.0Mi       380Mi       7.3Gi
+Swap:             0B          0B          0B
++ df -h / /boot
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        29G  1.7G   27G   6% /
+/dev/sda16      891M   63M  766M   8% /boot
+
+exit_code: 0
+
+## 2026-05-17T21:04:57Z
+description: Create script directory on original-kernel VM
+cwd: /home/azureuser/KernelSlim
+command: ssh 135.119.42.168 set\ -x\;\ mkdir\ -p\ ~/kernelslim-test
+
++ mkdir -p /home/azureuser/kernelslim-test
+
+exit_code: 0
+
+## 2026-05-17T21:05:07Z
+description: Copy memory usage script to original-kernel VM
+cwd: /home/azureuser/KernelSlim
+command: scp scripts/kernel-memory-usage.sh 135.119.42.168:/home/azureuser/kernelslim-test/kernel-memory-usage.sh
+
+
+exit_code: 0
+
+## 2026-05-17T21:05:13Z
+description: Run memory usage script on original unmodified kernel
+cwd: /home/azureuser/KernelSlim
+command: ssh 135.119.42.168 set\ -x\;\ uname\ -a\;\ chmod\ +x\ ~/kernelslim-test/kernel-memory-usage.sh\;\ ~/kernelslim-test/kernel-memory-usage.sh
+
++ uname -a
+Linux runt3 6.17.0-1013-azure #13~24.04.1-Ubuntu SMP Wed Apr 15 17:07:43 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ chmod +x /home/azureuser/kernelslim-test/kernel-memory-usage.sh
++ /home/azureuser/kernelslim-test/kernel-memory-usage.sh
+=======================================
+ Linux Kernel Memory Usage Statistics
+=======================================
+
+Kernel Memory Breakdown:
+---------------------------------------
+Slab:                          74.68 MB
+  SReclaimable:                24.32 MB
+  SUnreclaim:                  50.36 MB
+KernelStack:                    2.45 MB
+PageTables:                     3.17 MB
+VmallocUsed:                   29.70 MB
+Percpu:                         0.77 MB
+
+DirectMap Total:                0.00 MB
+
+---------------------------------------
+Estimated Kernel Used:        110.77 MB
+
+Notes:
+  - Excludes user-space process RSS/VSZ
+  - Includes slab/page tables/kernel stack/vmalloc/percpu
+  - DirectMap is shown separately (physical mapping region)
+  - Values are approximations from /proc/meminfo
+
+exit_code: 0
+

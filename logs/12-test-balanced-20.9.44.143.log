@@ -1,0 +1,258 @@
+## 2026-05-17T20:37:51Z
+description: Copy balanced kernel packages to test VM
+cwd: /home/azureuser/KernelSlim
+command: scp artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb 20.9.44.143:/home/azureuser/kernelslim-test/
+
+
+exit_code: 0
+
+## 2026-05-17T20:37:57Z
+description: Install balanced kernel packages on test VM
+cwd: /home/azureuser/KernelSlim
+command: ssh 20.9.44.143 set\ -x\;\ cd\ ~/kernelslim-test\;\ sudo\ dpkg\ -i\ ./linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb\ ./linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb\;\ ls\ -lh\ /boot/\*6.18.32-kernelslim-balanced\*\;\ sudo\ grep\ -R\ \"6.18.32-kernelslim-balanced\"\ /boot/grub/grub.cfg\ \|\ head\ -20\ \|\|\ true
+
++ cd /home/azureuser/kernelslim-test
++ sudo dpkg -i ./linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb ./linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+Selecting previously unselected package linux-image-6.18.32-kernelslim-balanced.
+(Reading database ... 94668 files and directories currently installed.)
+Preparing to unpack .../linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb ...
+Unpacking linux-image-6.18.32-kernelslim-balanced (6.18.32-kernelslim3) ...
+Selecting previously unselected package linux-headers-6.18.32-kernelslim-balanced.
+Preparing to unpack .../linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb ...
+Unpacking linux-headers-6.18.32-kernelslim-balanced (6.18.32-kernelslim3) ...
+Setting up linux-image-6.18.32-kernelslim-balanced (6.18.32-kernelslim3) ...
+update-initramfs: Generating /boot/initrd.img-6.18.32-kernelslim-balanced
+W: Possible missing firmware /lib/firmware/renesas_usb_fw.mem for built-in driver xhci_pci_renesas
+cryptsetup: ERROR: Couldn't resolve device /dev/root
+cryptsetup: WARNING: Couldn't determine root device
+flash-kernel: deferring update (trigger activated)
+flash-kernel: deferring update (trigger activated)
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/40-force-partuuid.cfg'
+Sourcing file `/etc/default/grub.d/50-cloudimg-settings.cfg'
+Generating grub configuration file ...
+GRUB_FORCE_PARTUUID is set, will attempt initrdless boot
+Found linux image: /boot/vmlinuz-6.18.32-kernelslim-conservative-azure
+Found initrd image: /boot/initrd.img-6.18.32-kernelslim-conservative-azure
+Found linux image: /boot/vmlinuz-6.18.32-kernelslim-balanced
+Found initrd image: /boot/initrd.img-6.18.32-kernelslim-balanced
+Found linux image: /boot/vmlinuz-6.17.0-1013-azure
+Found initrd image: /boot/initrd.img-6.17.0-1013-azure
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+Setting up linux-headers-6.18.32-kernelslim-balanced (6.18.32-kernelslim3) ...
+Processing triggers for flash-kernel (3.107ubuntu13~24.04.6) ...
+System running in EFI mode, skipping.
++ ls -lh /boot/System.map-6.18.32-kernelslim-balanced /boot/config-6.18.32-kernelslim-balanced /boot/initrd.img-6.18.32-kernelslim-balanced /boot/vmlinuz-6.18.32-kernelslim-balanced
+-rw-r--r-- 1 root root 7.6M May 17 19:55 /boot/System.map-6.18.32-kernelslim-balanced
+-rw-r--r-- 1 root root 271K May 17 19:55 /boot/config-6.18.32-kernelslim-balanced
+-rw-r--r-- 1 root root  51M May 17 20:38 /boot/initrd.img-6.18.32-kernelslim-balanced
+-rwxr-xr-x 1 root root  17M May 17 19:55 /boot/vmlinuz-6.18.32-kernelslim-balanced
++ sudo grep -R 6.18.32-kernelslim-balanced /boot/grub/grub.cfg
++ head -20
+	menuentry 'Ubuntu, with Linux 6.18.32-kernelslim-balanced' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-6.18.32-kernelslim-balanced-advanced-7f7e44df-0703-4ea4-998f-e5b51cbca9b7' {
+		echo	'Loading Linux 6.18.32-kernelslim-balanced ...'
+			linux	/vmlinuz-6.18.32-kernelslim-balanced root=PARTUUID=14d6189f-fe10-4753-ab42-7db823c45122 ro  console=tty1 console=ttyAMA0 earlycon=pl011,0xeffec000 initcall_blacklist=arm_pmu_acpi_init nvme_core.io_timeout=240 
+			initrd	/initrd.img-6.18.32-kernelslim-balanced
+			linux	/vmlinuz-6.18.32-kernelslim-balanced root=PARTUUID=14d6189f-fe10-4753-ab42-7db823c45122 ro  console=tty1 console=ttyAMA0 earlycon=pl011,0xeffec000 initcall_blacklist=arm_pmu_acpi_init nvme_core.io_timeout=240  panic=-1
+	menuentry 'Ubuntu, with Linux 6.18.32-kernelslim-balanced (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-6.18.32-kernelslim-balanced-recovery-7f7e44df-0703-4ea4-998f-e5b51cbca9b7' {
+		echo	'Loading Linux 6.18.32-kernelslim-balanced ...'
+			linux	/vmlinuz-6.18.32-kernelslim-balanced root=PARTUUID=14d6189f-fe10-4753-ab42-7db823c45122 ro recovery nomodeset  console=tty1 console=ttyAMA0 earlycon=pl011,0xeffec000 initcall_blacklist=arm_pmu_acpi_init nvme_core.io_timeout=240
+			initrd	/initrd.img-6.18.32-kernelslim-balanced
+			linux	/vmlinuz-6.18.32-kernelslim-balanced root=PARTUUID=14d6189f-fe10-4753-ab42-7db823c45122 ro recovery nomodeset  console=tty1 console=ttyAMA0 earlycon=pl011,0xeffec000 initcall_blacklist=arm_pmu_acpi_init nvme_core.io_timeout=240 panic=-1
+
+exit_code: 0
+
+## 2026-05-17T20:38:17Z
+description: Set balanced kernel as next boot entry
+cwd: /home/azureuser/KernelSlim
+command: ssh 20.9.44.143 set\ -x\;\ sudo\ grub-reboot\ \"Advanced\ options\ for\ Ubuntu\>Ubuntu\,\ with\ Linux\ 6.18.32-kernelslim-balanced\"\;\ sudo\ grub-editenv\ list
+
++ sudo grub-reboot 'Advanced options for Ubuntu>Ubuntu, with Linux 6.18.32-kernelslim-balanced'
++ sudo grub-editenv list
+next_entry=Advanced options for Ubuntu>Ubuntu, with Linux 6.18.32-kernelslim-balanced
+
+exit_code: 0
+
+## 2026-05-17T20:38:21Z
+description: Reboot test VM into balanced kernel
+cwd: /home/azureuser/KernelSlim
+command: ssh 20.9.44.143 set\ -x\;\ sudo\ reboot
+
++ sudo reboot
+
+exit_code: 0
+
+## 2026-05-17T20:38:26Z
+description: Wait for test VM SSH after balanced reboot
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ for\ i\ in\ \$\(seq\ 1\ 72\)\;\ do\ if\ ssh\ -o\ BatchMode=yes\ -o\ ConnectTimeout=5\ 20.9.44.143\ \"set\ -x\;\ uname\ -a\"\;\ then\ exit\ 0\;\ fi\;\ sleep\ 5\;\ done\;\ exit\ 1
+
+++ seq 1 72
++ for i in $(seq 1 72)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 20.9.44.143 'set -x; uname -a'
+ssh: connect to host 20.9.44.143 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 72)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 20.9.44.143 'set -x; uname -a'
++ uname -a
+Linux runt2 6.18.32-kernelslim-balanced #kernelslim3 SMP Sun May 17 20:29:34 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ exit 0
+++ '[' 4 = 1 ']'
+
+exit_code: 0
+
+## 2026-05-17T20:38:47Z
+description: Verify Docker container launch under balanced kernel
+cwd: /home/azureuser/KernelSlim
+command: ssh 20.9.44.143 set\ -x\;\ uname\ -a\;\ sudo\ systemctl\ is-active\ docker\ containerd\;\ sudo\ docker\ info\;\ sudo\ docker\ run\ --rm\ hello-world
+
++ uname -a
+Linux runt2 6.18.32-kernelslim-balanced #kernelslim3 SMP Sun May 17 20:29:34 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ sudo systemctl is-active docker containerd
+active
+active
++ sudo docker info
+Client:
+ Version:    29.1.3
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  trust: Manage trust on Docker images (Docker Inc.)
+    Version:  29.1.3
+    Path:     /usr/libexec/docker/cli-plugins/docker-trust
+
+Server:
+ Containers: 0
+  Running: 0
+  Paused: 0
+  Stopped: 0
+ Images: 1
+ Server Version: 29.1.3
+ Storage Driver: overlayfs
+  driver-type: io.containerd.snapshotter.v1
+ Logging Driver: json-file
+ Cgroup Driver: systemd
+ Cgroup Version: 2
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+ CDI spec directories:
+  /etc/cdi
+  /var/run/cdi
+ Swarm: inactive
+ Runtimes: runc io.containerd.runc.v2
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 
+ runc version: 
+ init version: 
+ Security Options:
+  apparmor
+  seccomp
+   Profile: builtin
+  cgroupns
+ Kernel Version: 6.18.32-kernelslim-balanced
+ Operating System: Ubuntu 24.04.4 LTS
+ OSType: linux
+ Architecture: aarch64
+ CPUs: 2
+ Total Memory: 7.734GiB
+ Name: runt2
+ ID: d72817c9-b379-4404-9272-2d295f960000
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Experimental: false
+ Insecure Registries:
+  ::1/128
+  127.0.0.0/8
+ Live Restore Enabled: false
+ Firewall Backend: iptables
+
++ sudo docker run --rm hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (arm64v8)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+
+exit_code: 0
+
+## 2026-05-17T20:38:55Z
+description: Verify Debian LXC container launch under balanced kernel
+cwd: /home/azureuser/KernelSlim
+command: ssh 20.9.44.143 set\ -x\;\ sudo\ lxc-destroy\ -n\ kernelslim-debian-balanced\ -f\ 2\>/dev/null\ \|\|\ true\;\ sudo\ lxc-create\ -n\ kernelslim-debian-balanced\ -t\ download\ --\ -d\ debian\ -r\ bookworm\ -a\ arm64\;\ sudo\ lxc-start\ -n\ kernelslim-debian-balanced\;\ for\ i\ in\ \$\(seq\ 1\ 60\)\;\ do\ state=\$\(sudo\ lxc-info\ -n\ kernelslim-debian-balanced\ -sH\ \|\|\ true\)\;\ \[\ \"\$state\"\ =\ RUNNING\ \]\ \&\&\ break\;\ sleep\ 2\;\ done\;\ sudo\ lxc-info\ -n\ kernelslim-debian-balanced\;\ sudo\ lxc-attach\ -n\ kernelslim-debian-balanced\ --\ /bin/sh\ -lc\ \"uname\ -a\;\ cat\ /etc/os-release\;\ hostname\;\ ip\ addr\ show\ \|\|\ true\"\;\ sudo\ lxc-stop\ -n\ kernelslim-debian-balanced
+
++ sudo lxc-destroy -n kernelslim-debian-balanced -f
++ true
++ sudo lxc-create -n kernelslim-debian-balanced -t download -- -d debian -r bookworm -a arm64
+Using image from local cache
+Unpacking the rootfs
+
+---
+You just created a Debian bookworm arm64 (20260517_05:24) container.
+
+To enable SSH, run: apt install openssh-server
+No default root or user password are set by LXC.
++ sudo lxc-start -n kernelslim-debian-balanced
+++ seq 1 60
++ for i in $(seq 1 60)
+++ sudo lxc-info -n kernelslim-debian-balanced -sH
++ state=RUNNING
++ '[' RUNNING = RUNNING ']'
++ break
++ sudo lxc-info -n kernelslim-debian-balanced
+Name:           kernelslim-debian-balanced
+State:          RUNNING
+PID:            1880
+Link:           vethx2RStb
+ TX bytes:      176 bytes
+ RX bytes:      380 bytes
+ Total bytes:   556 bytes
++ sudo lxc-attach -n kernelslim-debian-balanced -- /bin/sh -lc 'uname -a; cat /etc/os-release; hostname; ip addr show || true'
+Linux kernelslim-debian-balanced 6.18.32-kernelslim-balanced #kernelslim3 SMP Sun May 17 20:29:34 UTC 2026 aarch64 GNU/Linux
+PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+NAME="Debian GNU/Linux"
+VERSION_ID="12"
+VERSION="12 (bookworm)"
+VERSION_CODENAME=bookworm
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+kernelslim-debian-balanced
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0@if8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 26:a7:83:eb:31:51 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::24a7:83ff:feeb:3151/64 scope link tentative 
+       valid_lft forever preferred_lft forever
++ sudo lxc-stop -n kernelslim-debian-balanced
+
+exit_code: 0
+

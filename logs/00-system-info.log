@@ -1,0 +1,72 @@
+## 2026-05-17T17:02:44Z
+description: Record build host system information
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ date\ -u\;\ uname\ -a\;\ nproc\;\ df\ -h\ .\;\ free\ -h\;\ lsb_release\ -a\ 2\>/dev/null\ \|\|\ true\;\ dpkg\ --print-architecture\;\ id
+
++ date -u
+Sun May 17 17:02:44 UTC 2026
++ uname -a
+Linux build 6.17.0-1013-azure #13~24.04.1-Ubuntu SMP Wed Apr 15 17:07:43 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ nproc
+2
++ df -h .
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       123G  2.6G  121G   3% /
++ free -h
++ lsb_release -a
+               total        used        free      shared  buff/cache   available
+Mem:           7.7Gi       923Mi       5.5Gi       4.0Mi       1.5Gi       6.8Gi
+Swap:             0B          0B          0B
+Distributor ID:	Ubuntu
+Description:	Ubuntu 24.04.4 LTS
+Release:	24.04
+Codename:	noble
++ dpkg --print-architecture
+arm64
++ id
+
+exit_code: 0
+
+uid=1000(azureuser) gid=1000(azureuser) groups=1000(azureuser),4(adm),24(cdrom),27(sudo),30(dip),104(lxd)
+## 2026-05-17T18:37:00Z
+description: Record resized build host resources before retry
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ date\ -u\;\ uname\ -a\;\ nproc\;\ free\ -h\;\ df\ -h\ .
+
++ date -u
+Sun May 17 18:37:00 UTC 2026
++ uname -a
+Linux build 6.17.0-1013-azure #13~24.04.1-Ubuntu SMP Wed Apr 15 17:07:43 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ nproc
+4
++ free -h
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       1.0Gi        14Gi       4.0Mi       514Mi        14Gi
+Swap:             0B          0B          0B
++ df -h .
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       123G  6.0G  117G   5% /
+
+exit_code: 0
+
+## 2026-05-17T20:42:17Z
+description: Record resized 8 CPU build host resources before aggressive retry
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ date\ -u\;\ uname\ -a\;\ nproc\;\ free\ -h\;\ df\ -h\ .
+
++ date -u
+Sun May 17 20:42:17 UTC 2026
++ uname -a
+Linux build 6.17.0-1013-azure #13~24.04.1-Ubuntu SMP Wed Apr 15 17:07:43 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ nproc
+8
++ free -h
+               total        used        free      shared  buff/cache   available
+Mem:            31Gi       1.3Gi        29Gi       4.0Mi       536Mi        29Gi
+Swap:             0B          0B          0B
++ df -h .
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       123G  9.0G  115G   8% /
+
+exit_code: 0
+

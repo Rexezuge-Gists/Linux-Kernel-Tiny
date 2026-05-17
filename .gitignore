@@ -1,0 +1,41 @@
+# Kernel source and build outputs
+/sources/linux-*/
+/sources/*.tar
+/sources/*.tar.*
+/sources/*.xz
+/sources/*.gz
+/sources/*.sign
+/sources/*.deb
+/sources/*.buildinfo
+/sources/*.changes
+/build/
+
+# Binary release artifacts belong in GitHub/GitLab releases
+/artifacts/*.deb
+/artifacts/*.buildinfo
+/artifacts/*.changes
+
+# Linux build byproducts, if builds are run in-tree
+*.o
+*.a
+*.s
+*.ko
+*.ko.*
+*.mod
+*.mod.c
+*.cmd
+*.order
+Module.symvers
+modules.order
+.tmp_versions/
+.*.cmd
+
+# Editor and OS noise
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Local scratch files
+/tmp/
+/.cache/

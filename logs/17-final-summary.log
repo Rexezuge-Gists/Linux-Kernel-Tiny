@@ -1,0 +1,57 @@
+## 2026-05-17T21:06:59Z
+description: Summarize configs artifacts and test logs
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ ls\ -lh\ artifacts/\*.deb\;\ sha256sum\ artifacts/\*.deb\;\ wc\ -l\ configs/\*.config\ configs/\*.diff\;\ du\ -sh\ sources/linux-6.18.32\ artifacts\ configs\ logs\;\ grep\ -R\ \"Estimated\ Kernel\ Used\"\ logs/11-kernel-memory-usage.log\ logs/15-original-kernel-memory-135.119.42.168.log\;\ grep\ -R\ \"Hello\ from\ Docker\"\ logs/08-test-host-20.9.44.143.log\ logs/12-test-balanced-20.9.44.143.log\ logs/16-test-aggressive-20.9.44.143.log\;\ grep\ -R\ \"Debian\ GNU/Linux\ 12\"\ logs/08-test-host-20.9.44.143.log\ logs/12-test-balanced-20.9.44.143.log\ logs/16-test-aggressive-20.9.44.143.log
+
++ ls -lh artifacts/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb artifacts/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb artifacts/linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb artifacts/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb artifacts/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb artifacts/linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb artifacts/linux-libc-dev_6.18.32-kernelslim1_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 9.1M May 17 21:05 artifacts/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 9.1M May 17 20:37 artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 9.3M May 17 19:51 artifacts/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 9.3M May 17 19:15 artifacts/linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+-rw-r--r-- 1 azureuser azureuser  59M May 17 21:05 artifacts/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+-rw-r--r-- 1 azureuser azureuser  69M May 17 20:37 artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 102M May 17 19:51 artifacts/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 102M May 17 19:15 artifacts/linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+-rw-r--r-- 1 azureuser azureuser 1.5M May 17 19:15 artifacts/linux-libc-dev_6.18.32-kernelslim1_arm64.deb
++ sha256sum artifacts/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb artifacts/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb artifacts/linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb artifacts/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb artifacts/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb artifacts/linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb artifacts/linux-libc-dev_6.18.32-kernelslim1_arm64.deb
+a116a51cc827bdd2798ac25bd1495656b32d0a6369cea3fcf091b4547f927225  artifacts/linux-headers-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+ac0fd01de46cf6bc35dda2a08ab8db69d76870fc697157540503f44b66a1ddba  artifacts/linux-headers-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+0eb602c6346e52e6cfc613eaa9962f3a048d43a2cb95e91b51dd0d67819ed33b  artifacts/linux-headers-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+7defbd2ddc25a0b110ab809c9140d9cb04ac7ad5dd6caae116aef9798f2c0281  artifacts/linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+99e3810e39799c144edf992d1be8b00ebe1fcc9f0096a874e5ccd251cf9578b5  artifacts/linux-image-6.18.32-kernelslim-aggressive_6.18.32-kernelslim4_arm64.deb
+796094849bb556739bac1c0955aed980e26df0d3fb5c7fe606ea4f5b7fb74d8c  artifacts/linux-image-6.18.32-kernelslim-balanced_6.18.32-kernelslim3_arm64.deb
+3b8d1c307f6cbf6cf8ddc77c182b17fd7bd44cd8828756df2616c356d1aabd0d  artifacts/linux-image-6.18.32-kernelslim-conservative-azure_6.18.32-kernelslim2_arm64.deb
+fc3b3a30cd64ead86264e6f92928b9c54587572a8935029bb3272c7327f96b2f  artifacts/linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+13f683684198bab3cddb9c728f50633c9f0143eded68852a2c6066e58576109a  artifacts/linux-libc-dev_6.18.32-kernelslim1_arm64.deb
++ wc -l configs/00-current-host-6.17.0-1013-azure.config configs/01-olddefconfig-6.18.32.config configs/02-conservative-vm-containers-6.18.32.config configs/03-conservative-no-debug-6.18.32.config configs/04-conservative-azure-builtins-6.18.32.config configs/05-balanced-vm-containers-6.18.32.config configs/06-aggressive-vm-containers-6.18.32.config configs/05-balanced-vs-04.diff configs/06-aggressive-vs-05.diff
+  14432 configs/00-current-host-6.17.0-1013-azure.config
+  14521 configs/01-olddefconfig-6.18.32.config
+  14515 configs/02-conservative-vm-containers-6.18.32.config
+  14503 configs/03-conservative-no-debug-6.18.32.config
+  14503 configs/04-conservative-azure-builtins-6.18.32.config
+  11781 configs/05-balanced-vm-containers-6.18.32.config
+   9925 configs/06-aggressive-vm-containers-6.18.32.config
+   3573 configs/05-balanced-vs-04.diff
+   3947 configs/06-aggressive-vs-05.diff
+ 101700 total
++ du -sh sources/linux-6.18.32 artifacts configs logs
+6.0G	sources/linux-6.18.32
+370M	artifacts
+2.4M	configs
+16M	logs
++ grep -R 'Estimated Kernel Used' logs/11-kernel-memory-usage.log logs/15-original-kernel-memory-135.119.42.168.log
+logs/11-kernel-memory-usage.log:Estimated Kernel Used:        199.73 MB
+logs/11-kernel-memory-usage.log:Estimated Kernel Used:        107.40 MB
+logs/11-kernel-memory-usage.log:Estimated Kernel Used:        102.11 MB
+logs/15-original-kernel-memory-135.119.42.168.log:Estimated Kernel Used:        110.77 MB
++ grep -R 'Hello from Docker' logs/08-test-host-20.9.44.143.log logs/12-test-balanced-20.9.44.143.log logs/16-test-aggressive-20.9.44.143.log
+logs/08-test-host-20.9.44.143.log:Hello from Docker!
+logs/12-test-balanced-20.9.44.143.log:Hello from Docker!
+logs/16-test-aggressive-20.9.44.143.log:Hello from Docker!
++ grep -R 'Debian GNU/Linux 12' logs/08-test-host-20.9.44.143.log logs/12-test-balanced-20.9.44.143.log logs/16-test-aggressive-20.9.44.143.log
+logs/08-test-host-20.9.44.143.log:PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+logs/12-test-balanced-20.9.44.143.log:PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+logs/16-test-aggressive-20.9.44.143.log:PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+
+exit_code: 0
+

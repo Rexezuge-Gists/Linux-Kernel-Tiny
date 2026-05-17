@@ -1,0 +1,323 @@
+## 2026-05-17T19:15:05Z
+description: Accept SSH host key for test VM
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ mkdir\ -p\ ~/.ssh\;\ ssh-keyscan\ -H\ 172.171.1.151\ \>\>\ ~/.ssh/known_hosts
+
++ mkdir -p /home/azureuser/.ssh
++ ssh-keyscan -H 172.171.1.151
+# 172.171.1.151:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+# 172.171.1.151:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+# 172.171.1.151:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+# 172.171.1.151:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+# 172.171.1.151:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16
+
+exit_code: 0
+
+## 2026-05-17T19:15:09Z
+description: Check SSH access and test VM architecture
+cwd: /home/azureuser/KernelSlim
+command: ssh -o BatchMode=yes -o ConnectTimeout=10 172.171.1.151 set\ -x\;\ uname\ -a\;\ dpkg\ --print-architecture\;\ id\;\ df\ -h\ /boot\ /\ \|\|\ true
+
++ uname -a
+Linux runt 6.17.0-1013-azure #13~24.04.1-Ubuntu SMP Wed Apr 15 17:07:43 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
++ dpkg --print-architecture
+arm64
++ id
+uid=1000(azureuser) gid=1000(azureuser) groups=1000(azureuser),4(adm),24(cdrom),27(sudo),30(dip),104(lxd)
++ df -h /boot /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda16      891M   63M  766M   8% /boot
+/dev/root        29G  1.7G   27G   7% /
+
+exit_code: 0
+
+## 2026-05-17T19:15:15Z
+description: Create artifact directory on test VM
+cwd: /home/azureuser/KernelSlim
+command: ssh 172.171.1.151 set\ -x\;\ mkdir\ -p\ ~/kernelslim-test
+
++ mkdir -p /home/azureuser/kernelslim-test
+
+exit_code: 0
+
+## 2026-05-17T19:15:19Z
+description: Copy conservative kernel Debian packages to test VM
+cwd: /home/azureuser/KernelSlim
+command: scp artifacts/linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb artifacts/linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb 172.171.1.151:/home/azureuser/kernelslim-test/
+
+
+exit_code: 0
+
+## 2026-05-17T19:15:25Z
+description: Install conservative kernel packages on test VM
+cwd: /home/azureuser/KernelSlim
+command: ssh 172.171.1.151 set\ -x\;\ cd\ ~/kernelslim-test\;\ sudo\ dpkg\ -i\ ./linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb\ ./linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb\;\ ls\ -lh\ /boot/\*6.18.32-kernelslim-conservative\*\;\ grep\ -R\ \"6.18.32-kernelslim-conservative\"\ /boot/grub/grub.cfg\ \|\ head\ -20\ \|\|\ true
+
++ cd /home/azureuser/kernelslim-test
++ sudo dpkg -i ./linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb ./linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb
+Selecting previously unselected package linux-image-6.18.32-kernelslim-conservative.
+(Reading database ... 74874 files and directories currently installed.)
+Preparing to unpack .../linux-image-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb ...
+Unpacking linux-image-6.18.32-kernelslim-conservative (6.18.32-kernelslim1) ...
+Selecting previously unselected package linux-headers-6.18.32-kernelslim-conservative.
+Preparing to unpack .../linux-headers-6.18.32-kernelslim-conservative_6.18.32-kernelslim1_arm64.deb ...
+Unpacking linux-headers-6.18.32-kernelslim-conservative (6.18.32-kernelslim1) ...
+Setting up linux-image-6.18.32-kernelslim-conservative (6.18.32-kernelslim1) ...
+update-initramfs: Generating /boot/initrd.img-6.18.32-kernelslim-conservative
+W: Possible missing firmware /lib/firmware/renesas_usb_fw.mem for built-in driver xhci_pci_renesas
+flash-kernel: deferring update (trigger activated)
+flash-kernel: deferring update (trigger activated)
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/40-force-partuuid.cfg'
+Sourcing file `/etc/default/grub.d/50-cloudimg-settings.cfg'
+Generating grub configuration file ...
+GRUB_FORCE_PARTUUID is set, will attempt initrdless boot
+Found linux image: /boot/vmlinuz-6.18.32-kernelslim-conservative
+Found initrd image: /boot/initrd.img-6.18.32-kernelslim-conservative
+Found linux image: /boot/vmlinuz-6.17.0-1013-azure
+Found initrd image: /boot/initrd.img-6.17.0-1013-azure
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+Setting up linux-headers-6.18.32-kernelslim-conservative (6.18.32-kernelslim1) ...
+Processing triggers for flash-kernel (3.107ubuntu13~24.04.6) ...
+System running in EFI mode, skipping.
++ ls -lh /boot/System.map-6.18.32-kernelslim-conservative /boot/config-6.18.32-kernelslim-conservative /boot/initrd.img-6.18.32-kernelslim-conservative /boot/vmlinuz-6.18.32-kernelslim-conservative
+-rw-r--r-- 1 root root 7.8M May 17 18:37 /boot/System.map-6.18.32-kernelslim-conservative
+-rw-r--r-- 1 root root 333K May 17 18:37 /boot/config-6.18.32-kernelslim-conservative
+-rw-r--r-- 1 root root  56M May 17 19:15 /boot/initrd.img-6.18.32-kernelslim-conservative
+-rwxr-xr-x 1 root root  18M May 17 18:37 /boot/vmlinuz-6.18.32-kernelslim-conservative
++ grep -R 6.18.32-kernelslim-conservative /boot/grub/grub.cfg
++ head -20
+grep: /boot/grub/grub.cfg: Permission denied
+
+exit_code: 0
+
+## 2026-05-17T19:15:47Z
+description: Set conservative kernel as next boot entry
+cwd: /home/azureuser/KernelSlim
+command: ssh 172.171.1.151 set\ -x\;\ sudo\ grub-reboot\ \"Advanced\ options\ for\ Ubuntu\>Ubuntu\,\ with\ Linux\ 6.18.32-kernelslim-conservative\"\;\ sudo\ grub-editenv\ list
+
++ sudo grub-reboot 'Advanced options for Ubuntu>Ubuntu, with Linux 6.18.32-kernelslim-conservative'
++ sudo grub-editenv list
+next_entry=Advanced options for Ubuntu>Ubuntu, with Linux 6.18.32-kernelslim-conservative
+
+exit_code: 0
+
+## 2026-05-17T19:15:52Z
+description: Reboot test VM into conservative kernel
+cwd: /home/azureuser/KernelSlim
+command: ssh 172.171.1.151 set\ -x\;\ sudo\ reboot
+
++ sudo reboot
+
+exit_code: 0
+
+## 2026-05-17T19:15:56Z
+description: Wait for test VM SSH after reboot
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ for\ i\ in\ \$\(seq\ 1\ 60\)\;\ do\ if\ ssh\ -o\ BatchMode=yes\ -o\ ConnectTimeout=5\ 172.171.1.151\ \"uname\ -r\"\;\ then\ exit\ 0\;\ fi\;\ sleep\ 5\;\ done\;\ exit\ 1
+
+++ seq 1 60
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 60)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'uname -r'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
+## 2026-05-17T19:23:06Z
+description: Check test VM SSH after failed boot window
+cwd: /home/azureuser/KernelSlim
+command: ssh -o BatchMode=yes -o ConnectTimeout=10 172.171.1.151 set\ -x\;\ uname\ -a
+
+## 2026-05-17T19:23:06Z
+description: Check basic TCP reachability to test VM SSH
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ timeout\ 10\ bash\ -c\ \"\</dev/tcp/172.171.1.151/22\"
+
++ timeout 10 bash -c '</dev/tcp/172.171.1.151/22'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
+
+exit_code: 255
+
+
+exit_code: 124
+
+## 2026-05-17T19:51:11Z
+description: Recheck test VM SSH after Azure builtins build
+cwd: /home/azureuser/KernelSlim
+command: bash -lc set\ -x\;\ for\ i\ in\ \$\(seq\ 1\ 12\)\;\ do\ if\ ssh\ -o\ BatchMode=yes\ -o\ ConnectTimeout=5\ 172.171.1.151\ \"set\ -x\;\ uname\ -a\"\;\ then\ exit\ 0\;\ fi\;\ sleep\ 5\;\ done\;\ exit\ 1
+
+++ seq 1 12
++ for i in $(seq 1 12)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'set -x; uname -a'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
++ for i in $(seq 1 12)
++ ssh -o BatchMode=yes -o ConnectTimeout=5 172.171.1.151 'set -x; uname -a'
+ssh: connect to host 172.171.1.151 port 22: Connection timed out
++ sleep 5
